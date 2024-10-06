@@ -1,0 +1,7 @@
+faster-whisper
+youtube-to-audio
+jiwer
+librosa
+soundfile
+datasets
+transformers

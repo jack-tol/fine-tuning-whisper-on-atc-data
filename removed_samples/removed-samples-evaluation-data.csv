@@ -1,0 +1,83 @@
+Audio ID,Ground Truth,Prediction,WER
+ab14d639,roger,praha nine six one you are unreadable we are returning back to frequency one three two decimal eight zero five roger,2000.0
+248bb22c,calibra,calibra pepi praha three eight nine descending flight level one zero zero still in the last two minutes pepo zulu,1900.0
+33c24060,calibra,calibra pepi resume inbound krakow ita approach oscar juliett radar three one ten knots november,1400.0
+44eee1cf,calibra,cleared to land via jobair one one eight two three bye bye,1200.0
+9fa5ac88,calibra,lufthansa six kilo lima yankee dobre odpoledne papa three tango,1000.0
+66272639,calibra,bravo yankee roger stupa vacate at papa ready for descen,1000.0
+57e30253,calibra,calibra six eight yet ruzyne radar yet now soon shortcut csa,1000.0
+04224777,calibra,two point nine zero sydney call you back in one,1000.0
+0d3ed56c,boeing,yeah yeah boeing seven three zero was not available at all,1000.0
+62fafd28,calibra,ruzyne csa three alfa yankee papa two sierra oscar t,1000.0
+3c5a32ac,calibra,cleared to rapet via taxi to alfa delta two,900.0
+9e779126,calibra,ruzyne whiskey rapet si il y ponjour nois,800.0
+768ec20d,boeing,lufthansa six romeo juliett is ready for takeoff,800.0
+8f225fa8,calibra,calibra three two one gare papa nine five,700.0
+82095ac4,calibra,praha radar britair nine kilo bratislava,600.0
+70ce1632,calibra,calibra three eight zero victor klm ahead,600.0
+9ccc7b11,standby,turn around and taxi via,500.0
+229474f2,cali,cleared to land papa romeo cali,500.0
+22580967,medium,lufthansa two romeo yankee november,500.0
+99d86d7e,praha mike,praha finn air eight zero seven mike yeah heavy from chec,450.0
+a6d5b199,calibra,limb air two one,400.0
+a86cae8f,potvrzuju,one two eight zero,400.0
+70dc1d3a,calibra ground,calibra pepi praha ground vietnam two eight nine charlie vietnam,400.0
+b60dc262,calibra,calibra bravo yankee november i,400.0
+c96ad6e3,praha,praha air berlin eight ni,400.0
+ef65d3a8,vfr traffic,may we confirm we have the victo,350.0
+d85e5914,cleared to land,roger hotel zulu mike foxtrot three clear to land check one thi,333.33
+950d0599,praha,praha wizz air oscar,300.0
+84c64c87,tower oscar kilo,now oscar kilo lima papa we have to wait on tra,300.0
+29ca1916,praha,cleared to artup,300.0
+6b61a9e3,praha,praha delta lima india,300.0
+d4ef2b99,calibra,ruzyne radar ipe,300.0
+75cf9b9b,follow airbus,follow time beair now airbus three seven hotel,300.0
+0cd47838,india november,al lima india november oscar kilo alfa pe,300.0
+5ba2b10d,praha luftha,praha lufthansa two kilo alfa lufthansa,250.0
+0b791ec7,decimal three,two one zero enough please,250.0
+af3b656c,with high speed,cleared to taxi via victor mike three,233.33
+d29c9503,and hold two two,continue to rapet and continue heading csa four nine two seven,225.0
+99950160,roger,thank you,200.0
+23d9bbb6,calibra,nine alfa calibra,200.0
+20bda583,standby,bye bye,200.0
+a947662f,standby,stand bye,200.0
+5a977e2c,standby,stand bye,200.0
+160f1a6a,romeo,nine eight romeo,200.0
+94a1466c,flight level,just any turbulence above flight level,200.0
+e6239562,standby,stand bye,200.0
+e62e5887,roger,ogli chara roger,200.0
+eb53b3ca,expedite,good night,200.0
+ebfaa804,standby,stand bye,200.0
+c712e85d,course omelo,cleared to cross emirates,200.0
+8243e53e,sky travel,squawk two eight eight,200.0
+6c74f1d2,standby,stand bye,200.0
+6accf69b,standby,good bye,200.0
+8cbf1604,standby,stand bye,200.0
+86d8b28b,calibra,charlie charlie calibra,200.0
+4a9f4584,sky,ruzyne skyt,200.0
+3e6c22c2,standby,stand bye,200.0
+72b916a6,runway one,seven six four runway one three,200.0
+8a4415e9,standby,stand bye,200.0
+50315d72,standby,bye bye,200.0
+8ac6dc7e,standby,stand bye,200.0
+8c51e3b9,roger,proceed diki,200.0
+56b3ed8c,thomson one zero alfa,thomson one zero alfa do you have any wind on turublence,175.0
+98c52427,maintain present heading one descend five thousand,landing on heading one eight nine descend five thousand qnh one zero two two ready for departi,171.43
+cf0af5d6,tower five one,tower hello nor shuttle one five on,166.67
+06c4be3c,oscar india november,oscar india november roger minimum level is zero,166.67
+405c1d4c,four five,five bye now,150.0
+c9fa224a,black sea,six seven five,150.0
+32c7b06c,push app,cleared to land,150.0
+7a265ff3,three eight whiskey ground,three eight whiskey dnk ground one two one nine dev,150.0
+a3c3390b,when ready,it s time when ready,150.0
+30920b87,two is holding short,delta two eleven holding short behind mike alfa o,150.0
+976b6ac9,one five zero two,any speed restrictions for nor shuttle one five zero two,150.0
+38d2ea16,two zero push approved,squawk two five two zero for jetzt two,150.0
+23dd5975,is now ready for depa,and bline six one kilo please now ready for depart,140.0
+a6266379,our seven five,four seven five zero two nine,133.33
+d76e090b,fedex five six,heli speed bird eight five six,133.33
+62dae336,seven nine o,lufthansa seven kilo mike ro,133.33
+181f27e1,lufthansa four tango papa,lufthansa four tango papa speed one four zero level,125.0
+8883ad40,merci au plaisir aurevoir,aero flot two zero one,125.0
+d7c587b2,ing echo then direct direct,ing echo then direct to ruzyne direct bratislava nine five nine,120.0
+86936d13,to the left and the ground,to the left and the ground diki oscar kilo india oscar kilo india,116.67

@@ -1,0 +1,1 @@
+ct2-transformers-converter --model ./PATH_TO_MODEL_TO_CONVERT --output_dir ./CONVERTED_MODEL_OUTPUT_NAME --copy_files preprocessor_config.json --quantization float32

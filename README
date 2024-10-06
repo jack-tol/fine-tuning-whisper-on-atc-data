@@ -1,0 +1,13 @@
+run train.py to train the model
+
+run convert model on the model corresponding to the best checkpoint
+
+run cmd.txt for that model to convert it to the .bin format (for faster_whisper)
+
+run inference_finetuned to use the finetuned model for inference
+
+limitations
+dataset - 1hr test set of ATC02 and additional 20 hours from UWB-ATCC Corpus
+
+https://huggingface.co/datasets/Jzuluaga/uwb_atcc
+https://huggingface.co/datasets/Jzuluaga/atco2_corpus_1h
