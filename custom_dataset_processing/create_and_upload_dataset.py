@@ -25,7 +25,8 @@ texts_to_remove = [
     "calibra ground", "our seven five", "to the left and the ground", "potvrzuju", "expedite", "irm",
     "lufthansa four tango papa", "push app", "seven nine o", "india november", "three eight whiskey ground",
     "medium", "oscar india november", "flight level", "tower oscar kilo", "with high speed", "oscar yankee romeo november",
-    "and hold two two", "vfr traffic", "cleared to land", "two is holding short", "runway one", "sky"
+    "and hold two two", "vfr traffic", "cleared to land", "two is holding short", "runway one", "sky", "k klm", "understood",
+    "number one golf bravo", "but"
 ]
 
 def filter_samples(sample):
@@ -39,4 +40,4 @@ final_dataset = DatasetDict({
     'test': test_dataset
 })
 
-final_dataset.push_to_hub("atc_dataset")
+final_dataset.push_to_hub("atc-dataset")

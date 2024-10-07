@@ -1,5 +1,5 @@
 import torch
-from faster_whisper import WhisperModel
+from transformers import WhisperProcessor, WhisperForConditionalGeneration
 import numpy as np
 import soundfile as sf
 import os
@@ -8,13 +8,17 @@ from datasets import load_dataset
 import pandas as pd
 import re
 
-dataset = load_dataset("jacktol/atc_dataset")
+# Load the dataset
+dataset = load_dataset("jacktol/atc-dataset")
 
-def generate_transcription_and_process_results(model_path, log_file_path="whisper-medium.en-fine-tuned-for-ATC-evalutation-data-raw.txt", seed=None):
+def generate_transcription_and_process_results(model_name, log_file_path="whisper-medium.en-fine-tuned-for-ATC-evalutation-data-raw.txt", seed=None):
     if seed is not None:
         np.random.seed(seed)
 
-    model = WhisperModel(model_path, device="cuda" if torch.cuda.is_available() else "cpu", compute_type="float32")
+    # Load the Whisper model and processor
+    processor = WhisperProcessor.from_pretrained(model_name)
+    model = WhisperForConditionalGeneration.from_pretrained(model_name)
+    model.to("cuda" if torch.cuda.is_available() else "cpu")
 
     with open(log_file_path, "w") as log_file:
         wer_list = []
@@ -25,17 +29,29 @@ def generate_transcription_and_process_results(model_path, log_file_path="whispe
             audio_sr = sample['audio']['sampling_rate']
             ground_truth = sample['text']
 
+            # Save audio to temporary file
             audio_path = f"temp_audio_{idx}.wav"
             sf.write(audio_path, audio_array, audio_sr)
 
-            segments, _ = model.transcribe(audio_path, beam_size=5)
-            prediction = ''.join([segment.text for segment in segments])
+            # Load and process the audio file
+            audio_input, _ = sf.read(audio_path)
+
+            # Preprocess the audio and generate transcription
+            inputs = processor(audio_input, return_tensors="pt", sampling_rate=audio_sr)
+            inputs = {key: val.to(model.device) for key, val in inputs.items()}
+
+            # Generate predictions
+            with torch.no_grad():
+                generated_ids = model.generate(**inputs)
+                prediction = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
             normalized_prediction = prediction.strip()
 
+            # Calculate WER
             wer = jiwer.wer(ground_truth, normalized_prediction)
             wer_list.append(wer)
 
+            # Log results
             log_file.write(f"--------------------------------------------------\n")
             log_file.write(f"Sample {idx + 1}:\n")
             log_file.write(f"Ground Truth: {ground_truth}\n")
@@ -43,9 +59,11 @@ def generate_transcription_and_process_results(model_path, log_file_path="whispe
             log_file.write(f"Word Error Rate (WER): {wer * 100:.2f}%\n")
             log_file.write(f"--------------------------------------------------\n")
 
+            # Clean up temporary audio file
             if os.path.exists(audio_path):
                 os.remove(audio_path)
 
+        # Compute average WER
         avg_wer = np.mean(wer_list) * 100
 
         log_file.write(f"\nAverage Word Error Rate (WER) across {len(dataset['test'])} samples: {avg_wer:.2f}%\n")
@@ -70,7 +88,7 @@ def process_evaluation_log(log_file_path, avg_wer):
 
     wer_str = f"{avg_wer:.2f}"
 
-    csv_filename = f'whisper-medium.en-fine-tuned-for-ATC-{wer_str}-WER-evaluation-data_test.csv'
+    csv_filename = f'whisper-medium.en-fine-tuned-for-ATC-{wer_str}-WER-evaluation-data.csv'
     df_sorted.to_csv(csv_filename, index=False)
 
     print(f"Average WER: {wer_str}%")
@@ -80,5 +98,5 @@ def process_evaluation_log(log_file_path, avg_wer):
         os.remove(log_file_path)
 
 if __name__ == "__main__":
-    model_path = "jacktol/whisper-medium.en-fine-tuned-for-ATC-faster-whisper"
-    generate_transcription_and_process_results(model_path=model_path)
+    model_name = "jacktol/whisper-medium.en-fine-tuned-for-ATC"
+    generate_transcription_and_process_results(model_name=model_name)

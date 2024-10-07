@@ -10,13 +10,11 @@ whisper_model = WhisperModel(model_path, device="cuda", compute_type="float32")
 client = AsyncOpenAI()
 
 # System prompt for converting transcript to standard ATC syntax
-system_prompt = (
-    "Without altering the content in any way, convert the provided transcript into "
-    "standard pilot-ATC syntax. Ensure that all runway and heading numbers follow "
-    "the correct format (e.g., '11L' instead of 'one one left'). Use standard phraseology "
-    "where applicable. Preserve the segmentation of the transcript as it was provided, "
-    "keeping the timestamps and separating transmissions accordingly."
-)
+system_prompt = """Convert the provided transcript into standard pilot-ATC syntax without altering the content.
+Ensure that all runway and heading numbers are formatted correctly (e.g., '11L' for 'one one left'). Use standard
+aviation phraseology wherever applicable. Maintain the segmentation of the transcript as provided, but exclude the timestamps.
+Based on the context and segmentation of each transmission, label it as either 'ATC' or 'Pilot'."""
+
 
 # Function to transcribe audio and return the concatenated transcript with segment info
 def transcribe_audio(file_path):
@@ -26,6 +24,8 @@ def transcribe_audio(file_path):
     # Combine all segments with timestamps
     for segment in segments:
         transcript.append(f"[{segment.start:.2f}s -> {segment.end:.2f}s] {segment.text}")
+    
+    print('\n'.join(transcript).strip())
     
     return '\n'.join(transcript).strip()
 

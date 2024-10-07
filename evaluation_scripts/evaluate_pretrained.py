@@ -1,5 +1,5 @@
 import torch
-from faster_whisper import WhisperModel
+from transformers import WhisperProcessor, WhisperForConditionalGeneration
 import numpy as np
 import soundfile as sf
 import os
@@ -10,8 +10,10 @@ import re
 import pandas as pd
 from datasets import load_dataset
 
-dataset = load_dataset("jacktol/atc_dataset")
+# Load the dataset
+dataset = load_dataset("jacktol/atc-dataset")
 
+# Define the phonetic alphabet for normalization
 phonetic_alphabet = {
     'a': 'alfa', 'b': 'bravo', 'c': 'charlie', 'd': 'delta', 'e': 'echo',
     'f': 'foxtrot', 'g': 'golf', 'h': 'hotel', 'i': 'india', 'j': 'juliett',
@@ -20,7 +22,9 @@ phonetic_alphabet = {
     'u': 'uniform', 'v': 'victor', 'w': 'whiskey', 'x': 'x-ray', 'y': 'yankee', 'z': 'zulu'
 }
 
+# Normalization functions
 def normalize_prediction(text):
+    # Function to normalize the prediction to match ground truth format
     def convert_flight_level(match):
         flight_level_number = match.group(1)
         expanded_flight_level = ' '.join([num2words(int(digit)) for digit in flight_level_number])
@@ -98,11 +102,14 @@ def normalize_prediction(text):
 
     return normalized_text
 
-def generate_transcription_and_process(model_size):
-    model = WhisperModel(model_size)
+def generate_transcription_and_process(model_name):
+    # Load Hugging Face Whisper model and processor
+    processor = WhisperProcessor.from_pretrained(model_name)
+    model = WhisperForConditionalGeneration.from_pretrained(model_name)
+    model.to("cuda" if torch.cuda.is_available() else "cpu")
 
     log_file_path = "whisper-medium.en-evaluation-data-raw.txt"
-    
+
     with open(log_file_path, "w") as log_file:
         wer_list = []
 
@@ -112,17 +119,28 @@ def generate_transcription_and_process(model_size):
             audio_sr = sample['audio']['sampling_rate']
             ground_truth = sample['text']
 
+            # Save audio to temporary file
             audio_path = f"temp_audio_{idx}.wav"
             sf.write(audio_path, audio_array, audio_sr)
 
-            segments, _ = model.transcribe(audio_path)
-            prediction = ''.join([segment.text for segment in segments])
+            # Read and process the audio
+            audio_input, _ = sf.read(audio_path)
+            inputs = processor(audio_input, return_tensors="pt", sampling_rate=audio_sr)
+            inputs = {key: val.to(model.device) for key, val in inputs.items()}
 
+            # Generate prediction
+            with torch.no_grad():
+                generated_ids = model.generate(**inputs)
+                prediction = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+
+            # Normalize prediction
             normalized_prediction = normalize_prediction(prediction)
 
+            # Compute Word Error Rate (WER)
             wer = jiwer.wer(ground_truth, normalized_prediction)
             wer_list.append(wer)
 
+            # Log the results
             log_file.write(f"--------------------------------------------------\n")
             log_file.write(f"Sample {idx + 1}:\n")
             log_file.write(f"Ground Truth: {ground_truth}\n")
@@ -174,5 +192,5 @@ def process_evaluation_log(log_file_path, avg_wer):
             os.remove(log_file_path)
 
 if __name__ == "__main__":
-    model_size = "medium.en"
-    generate_transcription_and_process(model_size=model_size)
+    model_name = "openai/whisper-medium.en"
+    generate_transcription_and_process(model_name=model_name)
