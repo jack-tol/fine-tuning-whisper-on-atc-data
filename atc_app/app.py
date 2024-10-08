@@ -13,7 +13,9 @@ client = AsyncOpenAI()
 system_prompt = """Convert the provided transcript into standard pilot-ATC syntax without altering the content.
 Ensure that all runway and heading numbers are formatted correctly (e.g., '11L' for 'one one left'). Use standard
 aviation phraseology wherever applicable. Maintain the segmentation of the transcript as provided, but exclude the timestamps.
-Based on the context and segmentation of each transmission, label it as either 'ATC' or 'Pilot'."""
+Based on the context and segmentation of each transmission, label it as either 'ATC' or 'Pilot'. At the very beginning of your
+response place a horizonal div with "---" and then line-break, and then add a H2 which says "Transciption, and then
+proceed with the transciption."""
 
 
 # Function to transcribe audio and return the concatenated transcript with segment info
@@ -33,45 +35,51 @@ def transcribe_audio(file_path):
 async def start_chat():
     # Welcome message
     welcome_message = """
-## Welcome to the **Aviation Transcription Assistant**
+## Welcome to the **ATC Transcription Assistant**
 
 ---
 
-### Purpose
+### What is this tool for?
 
-This tool uses OpenAI's Whisper model, **finetuned for Air Traffic Control (ATC)**, to transcribe aviation communications into text. It helps improve clarity and reduce communication errors in the aviation industry.
-
----
-
-### The Problem
-
-Communication errors cause **over 70% of aviation incidents** (NASA). Non-standard language and miscommunication are common, with **44% of pilots** facing these issues on every flight (IATA). This tool helps create a clear record of pilot-ATC communications for review.
+This tool transcribes **Air Traffic Control (ATC)** audio using OpenAI’s **Whisper medium.en** model, fine-tuned for ATC communications. Developed as part of a research project, the fine-tuned **Whisper medium.en** model offers significant improvements in transcription accuracy for ATC audio.
 
 ---
 
-### The Solution
+### Performance
 
-By converting communications into **standard ATC syntax**, this tool enhances accuracy and acts as a **backup log**, reducing risks from misunderstood instructions.
+- **Fine-tuned Whisper medium.en WER**: 15.08%
+- **Non fine-tuned Whisper medium.en WER**: 94.59%
+- **Relative improvement**: 84.06%
+
+While the fine-tuned model performs much better, **we cannot guarantee the accuracy of the transcriptions**. For more details on the fine-tuning process, see the [blog post](https://jacktol.net/posts/fine-tuning_whisper_on_atc_data), or check out the [project repository](https://github.com/jack-tol/fine-tuning-whisper-on-atc-data). Feel free to contact me at [contact@jacktol.net](mailto:contact@jacktol.net).
+
+---
+
+### How to Use
+
+1. **Upload an ATC audio file**: Upload an audio file in **MP3** or **WAV** format containing ATC communications.
+2. **View the transcription**: The tool will transcribe the audio and display the text on the screen.
+3. **Transcribe another audio**: Click **New Chat** in the top-right to start a new transcription.
 
 ---
 
-## How to Use
-
-1. Upload an **audio file** of aviation communications.
-2. The tool will **transcribe the audio** into standard ATC format.
-3. Review the transcription for accuracy.
-
----
+To get started, upload the audio below.
 """
 
     await cl.Message(content=welcome_message).send()
 
     # Prompt user to upload audio file
+# Prompt user to upload audio file (MP3 or WAV)
     files = await cl.AskFileMessage(
         content="", 
-        accept={"audio/wav": [".wav"]},
-        max_size_mb=50
+        accept={
+            "audio/wav": [".wav"],
+            "audio/mpeg": [".mp3"]
+        },
+        max_size_mb=50,
+        timeout=3600
     ).send()
+
 
     if files:
         audio_file = files[0]

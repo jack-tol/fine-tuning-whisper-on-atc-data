@@ -53,7 +53,7 @@ edit_message = true
 
 [UI]
 # Name of the assistant.
-name = "ATC Transcriber"
+name = "ATC Transcription Assistant"
 
 # Description of the assistant. This is used for HTML tags.
 # description = ""

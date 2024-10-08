@@ -13,3 +13,8 @@ div[class*='MuiFormControl-root'] {
 #open-sidebar-button {
   display: none !important;
 }
+
+/* Hide the logo image by alt attribute */
+img[alt='logo'] {
+  display: none !important;
+}
