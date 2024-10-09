@@ -10,10 +10,8 @@ import re
 import pandas as pd
 from datasets import load_dataset
 
-# Load the dataset
 dataset = load_dataset("jacktol/atc-dataset")
 
-# Define the phonetic alphabet for normalization
 phonetic_alphabet = {
     'a': 'alfa', 'b': 'bravo', 'c': 'charlie', 'd': 'delta', 'e': 'echo',
     'f': 'foxtrot', 'g': 'golf', 'h': 'hotel', 'i': 'india', 'j': 'juliett',
@@ -22,9 +20,7 @@ phonetic_alphabet = {
     'u': 'uniform', 'v': 'victor', 'w': 'whiskey', 'x': 'x-ray', 'y': 'yankee', 'z': 'zulu'
 }
 
-# Normalization functions
 def normalize_prediction(text):
-    # Function to normalize the prediction to match ground truth format
     def convert_flight_level(match):
         flight_level_number = match.group(1)
         expanded_flight_level = ' '.join([num2words(int(digit)) for digit in flight_level_number])
@@ -103,7 +99,6 @@ def normalize_prediction(text):
     return normalized_text
 
 def generate_transcription_and_process(model_name):
-    # Load Hugging Face Whisper model and processor
     processor = WhisperProcessor.from_pretrained(model_name)
     model = WhisperForConditionalGeneration.from_pretrained(model_name)
     model.to("cuda" if torch.cuda.is_available() else "cpu")
@@ -119,28 +114,22 @@ def generate_transcription_and_process(model_name):
             audio_sr = sample['audio']['sampling_rate']
             ground_truth = sample['text']
 
-            # Save audio to temporary file
             audio_path = f"temp_audio_{idx}.wav"
             sf.write(audio_path, audio_array, audio_sr)
 
-            # Read and process the audio
             audio_input, _ = sf.read(audio_path)
             inputs = processor(audio_input, return_tensors="pt", sampling_rate=audio_sr)
             inputs = {key: val.to(model.device) for key, val in inputs.items()}
 
-            # Generate prediction
             with torch.no_grad():
                 generated_ids = model.generate(**inputs)
                 prediction = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
-            # Normalize prediction
             normalized_prediction = normalize_prediction(prediction)
 
-            # Compute Word Error Rate (WER)
             wer = jiwer.wer(ground_truth, normalized_prediction)
             wer_list.append(wer)
 
-            # Log the results
             log_file.write(f"--------------------------------------------------\n")
             log_file.write(f"Sample {idx + 1}:\n")
             log_file.write(f"Ground Truth: {ground_truth}\n")

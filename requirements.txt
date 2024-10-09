@@ -1,7 +1,11 @@
-faster-whisper
-youtube-to-audio
-jiwer
-librosa
-soundfile
+audiomentations
 datasets
+evaluate
+huggingface_hub
+jiwer
+num2words
+numpy
+pandas
+soundfile
+torch
 transformers

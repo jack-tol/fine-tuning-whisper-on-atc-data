@@ -3,6 +3,4 @@ __pycache__/
 *.pyc
 .env
 tokens.json
-fly.toml
-Dockerfile
 .github/
