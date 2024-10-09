@@ -49,7 +49,7 @@ For further context, read the full blog post covering the fine-tuning process on
    ```
    pip install -r requirements.txt
    ```
-   Dataset Preparation: Use the `create_and_upload_dataset.py` script to process the ATC datasets and upload them to Hugging Face. Adjust paths and dataset IDs as needed.
+   Dataset Preparation: Use the `create_and_upload_dataset.py` script to process the ATC datasets and upload them to Hugging Face.
 
 Model Training: Fine-tune the Whisper model using the `train.py` script. This script dynamically augments data and trains the model over 10 epochs with early stopping.
 
