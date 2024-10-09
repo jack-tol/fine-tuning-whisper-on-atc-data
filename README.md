@@ -13,7 +13,7 @@ You can explore the **open-source models** on Hugging Face:
 - [Whisper Medium EN Fine-Tuned for ATC](https://huggingface.co/jacktol/whisper-medium.en-fine-tuned-for-ATC)
 - [Whisper Medium EN Fine-Tuned for ATC (Faster Whisper)](https://huggingface.co/jacktol/whisper-medium.en-fine-tuned-for-ATC-faster-whisper)
 
-Additionally, the **ATC Transcription Assistant** is an application hosted on Hugging Face Spaces that allows you to upload audio (MP3 or WAV) to transcribe ATC communications in real-time. Try it out [here](https://huggingface.co/spaces/jacktol/ATC-Transcription-Assistant).
+Additionally, the **ATC Transcription Assistant** is an application hosted on Hugging Face Spaces that allows you to upload audio (MP3 or WAV) to transcribe ATC communications. Try it out [here](https://huggingface.co/spaces/jacktol/ATC-Transcription-Assistant).
 
 The **dataset** used for fine-tuning can also be found on Hugging Face: [ATC Dataset](https://huggingface.co/datasets/jacktol/atc-dataset).
 
