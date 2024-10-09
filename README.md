@@ -70,6 +70,6 @@ The fine-tuned model is readily available on Hugging Face. You have two options 
 
 ### License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 For further details or inquiries, contact me at contact@jacktol.net.
