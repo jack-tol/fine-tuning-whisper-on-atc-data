@@ -57,7 +57,16 @@ Evaluation: Use the evaluation scripts to measure the WER of the fine-tuned mode
 
 Model Export & Upload: Use the `export_model_for_inference.py` script to prepare the model for inference, and the `upload_local_models_to_huggingface.py` script to upload your model to Hugging Face.
 
-Model Usage: The fine-tuned model is available via Hugging Face Spaces. To use it, upload your ATC communication audio (MP3 or WAV) and get real-time transcriptions through the **[ATC Transcription Assistant](https://huggingface.co/spaces/jacktol/ATC-Transcription-Assistant)**.
+## Model Usage
+
+The fine-tuned model is readily available on Hugging Face. You have two options to access and use the models:
+
+1. **Download Locally**: You can download the models directly to your local system via these links:
+
+   - [Whisper Medium EN Fine-Tuned for ATC](https://huggingface.co/jacktol/whisper-medium.en-fine-tuned-for-ATC)
+   - [Whisper Medium EN Fine-Tuned for ATC (Faster Whisper)](https://huggingface.co/jacktol/whisper-medium.en-fine-tuned-for-ATC-faster-whisper)
+
+2. **Use Online**: Alternatively, you can use the models online via the [ATC Transcription Assistant](https://huggingface.co/spaces/jacktol/ATC-transcription-assistant) on Hugging Face. Simply upload your ATC communication audio file (MP3 or WAV), and the model will generate transcriptions for you directly on the screen.
 
 ### License
 
